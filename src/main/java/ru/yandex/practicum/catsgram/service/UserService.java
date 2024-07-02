@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -61,6 +62,14 @@ public class UserService {
             throw new NotFoundException("Пользователь с id = " + newUser.getId() + " не найден");
         }
 
+    }
+
+    public Optional<User> findUserById(long authorId) {
+        if (users.containsKey(authorId)) {
+            return Optional.of(users.get(authorId));
+        } else {
+            return Optional.empty();
+        }
     }
 
     private long getNextId() {
