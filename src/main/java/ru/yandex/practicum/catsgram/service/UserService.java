@@ -15,6 +15,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final Map<Long, User> users = new HashMap<>();
+    private long counterUserId = 0L;
 
     public Collection<User> findAll() {
         return users.values();
@@ -64,7 +65,7 @@ public class UserService {
 
     }
 
-    public Optional<User> findUserById(long authorId) {
+    public Optional<User> getUserById(long authorId) {
         if (users.containsKey(authorId)) {
             return Optional.of(users.get(authorId));
         } else {
@@ -73,11 +74,6 @@ public class UserService {
     }
 
     private long getNextId() {
-        long currentMaxId = users.keySet()
-                .stream()
-                .mapToLong(id -> id)
-                .max()
-                .orElse(0);
-        return ++currentMaxId;
+        return ++counterUserId;
     }
 }
